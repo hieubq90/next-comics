@@ -1,4 +1,19 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
+import path from 'path'
+import { fileURLToPath } from 'url'
+import BundleAnalyzer from '@next/bundle-analyzer'
 
-export default nextConfig;
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+const withBundleAnalyzer = BundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+})
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  sassOptions: {
+    includePaths: [path.join(__dirname, 'src/assets/styles')],
+  },
+}
+
+// export default nextConfig
+export default withBundleAnalyzer(nextConfig)
