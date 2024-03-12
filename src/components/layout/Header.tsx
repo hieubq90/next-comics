@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import * as React from 'react'
 import {
     NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList,
@@ -11,6 +12,8 @@ import {
 import ModeToggle from './ModeToggle'
 
 const Header: React.FC = () => {
+  const pathname = usePathname()
+
   return (
     <header className="sticky top-0 z-40 w-full flex-none backdrop-blur transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 supports-backdrop-blur:bg-white/60 bg-white/80 dark:border-slate-50/[0.06] dark:bg-transparent">
       <div className="mx-auto max-w-[90rem]">
@@ -30,7 +33,7 @@ const Header: React.FC = () => {
                 data-nimg="1"
                 src="/comic.svg"
               />
-              <span className="ml-2 font-baloo2 font-semibold text-lg">Next Comics</span>
+              <span className="ml-2 font-baloo2 font-semibold text-xl text-primary">Next Comics</span>
             </a>
             <div className="relative ml-auto hidden items-center lg:flex">
               <NavigationMenu>
@@ -41,7 +44,12 @@ const Header: React.FC = () => {
                       legacyBehavior
                       passHref
                     >
-                      <NavigationMenuLink className={navigationMenuTriggerStyle()}>Trang Chủ</NavigationMenuLink>
+                      <NavigationMenuLink
+                        className={navigationMenuTriggerStyle()}
+                        active={pathname === '/'}
+                      >
+                        Trang Chủ
+                      </NavigationMenuLink>
                     </Link>
                   </NavigationMenuItem>
                   <NavigationMenuItem>
@@ -50,25 +58,40 @@ const Header: React.FC = () => {
                       legacyBehavior
                       passHref
                     >
-                      <NavigationMenuLink className={navigationMenuTriggerStyle()}>Thể Loại</NavigationMenuLink>
+                      <NavigationMenuLink
+                        className={navigationMenuTriggerStyle()}
+                        active={pathname === '/genres'}
+                      >
+                        Thể Loại
+                      </NavigationMenuLink>
                     </Link>
                   </NavigationMenuItem>
                   <NavigationMenuItem>
                     <Link
-                      href="/menu3"
+                      href="/new"
                       legacyBehavior
                       passHref
                     >
-                      <NavigationMenuLink className={navigationMenuTriggerStyle()}>Truyện Mới</NavigationMenuLink>
+                      <NavigationMenuLink
+                        className={navigationMenuTriggerStyle()}
+                        active={pathname === '/new'}
+                      >
+                        Truyện Mới
+                      </NavigationMenuLink>
                     </Link>
                   </NavigationMenuItem>
                   <NavigationMenuItem>
                     <Link
-                      href="/menu3"
+                      href="/top"
                       legacyBehavior
                       passHref
                     >
-                      <NavigationMenuLink className={navigationMenuTriggerStyle()}>Top Truyện</NavigationMenuLink>
+                      <NavigationMenuLink
+                        className={navigationMenuTriggerStyle()}
+                        active={pathname === '/top'}
+                      >
+                        Top Truyện
+                      </NavigationMenuLink>
                     </Link>
                   </NavigationMenuItem>
                 </NavigationMenuList>
