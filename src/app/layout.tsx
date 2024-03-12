@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
 import '~/assets/styles/main.scss'
 
-import { Toaster } from 'react-hot-toast'
+// import { Toaster } from 'react-hot-toast'
 import { baloo2, quicksand } from '~/assets/fonts'
+import Header from '~/components/layout/Header'
+import { Toaster } from '~/components/ui/sonner'
 
 import { Providers } from './providers'
 
@@ -22,9 +24,12 @@ export default function RootLayout({
       className={`${quicksand.variable} ${baloo2.variable}`}
       suppressHydrationWarning
     >
-      <body className="font-quicksand">
-        <Toaster />
-        <Providers>{children}</Providers>
+      <body className="min-h-screen font-quicksand antialiased">
+        <Providers>
+          <Header />
+          {children}
+          <Toaster />
+        </Providers>
       </body>
     </html>
   )
