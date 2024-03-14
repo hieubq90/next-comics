@@ -23,27 +23,28 @@ export const comicsClient = initQueryClient(comicsApi, {
         url: path,
         headers,
         data: body,
-      });
-      return { status: result.status, body: result.data, headers: result.headers };
+      })
+      return { status: result.status, body: result.data, headers: new Headers() }
     } catch (e: Error | AxiosError | any) {
       if (isAxiosError(e)) {
-        const error = e as AxiosError;
-        const response = error.response as AxiosResponse;
-        return { status: response.status, body: response.data, headers: response.headers };
+        const error = e as AxiosError
+        const response = error.response as AxiosResponse
+        return { status: response.status, body: response.data, headers: new Headers() }
       }
-      return { status: 500, body: unknown, headers: {} };
+      return { status: 500, body: unknown, headers: new Headers() }
     }
   },
   credentials: 'omit',
-});
+})
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  
   const [queryClient] = useState(
     () =>
       new QueryClient({
         defaultOptions: {
           queries: {
+            refetchOnMount: false,
+            refetchOnWindowFocus: false,
             staleTime: 5 * 1000,
           },
         },
@@ -61,7 +62,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
           {children}
         </ThemeProvider>
       </ReactQueryStreamedHydration>
-      {process.env.NODE_ENV === 'development' && <ReactQueryDevtools initialIsOpen={false} />}
+      {/* {process.env.NODE_ENV === 'development' && <ReactQueryDevtools initialIsOpen={false} />} */}
     </QueryClientProvider>
   )
 }
