@@ -3,10 +3,10 @@ import { Skeleton } from '~/components/ui/skeleton'
 import { cn } from '~/lib/utils'
 
 export type SkeletonCardProps = {
-  small: boolean
+  small?: boolean
 }
 
-export const SkeletonCard: React.FC<SkeletonCardProps> = ({ small }) => {
+export const SkeletonCard: React.FC<SkeletonCardProps> = ({ small = false }) => {
   return (
     <div className="flex flex-col space-y-3">
       <Skeleton className={cn('h-[200px] rounded-xl', small ? 'w-[177px]' : 'w-[207px]')} />

@@ -1,27 +1,52 @@
 'use client'
 
+import React, { useCallback, useEffect, useState } from 'react'
 import { Autoplay } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { ComicCard } from '~/components/commons/ComicCard'
+import { ComicCard, IComic } from '~/components/commons/ComicCard'
 import ComicsSlide from '~/components/commons/ComicsSlide'
 import { ListSkeletonCards } from '~/components/commons/SkeletonCard'
-
-import { useIsFetching } from '@tanstack/react-query'
 
 import { comicsClient } from './providers'
 
 export default function Home() {
-  const isLoading = useIsFetching()
-  const recommendComics = comicsClient.comics.recommend.useQuery(['recommend'])
-  const trendingComics = comicsClient.comics.trending.useQuery(['trending'])
-  const completedComics = comicsClient.comics.completedComics.useQuery(['completed'])
-  const recentlyUpdateComics = comicsClient.comics.recentlyUpdateComics.useQuery(['recent-update'])
-  const boyComics = comicsClient.comics.boyComics.useQuery(['boy'])
-  const girlComics = comicsClient.comics.girlComics.useQuery(['girl'])
+  const [isPaused, setIsPaused] = useState(true)
+  const [recommendComics, setRecommendComics] = useState<IComic[]>([])
+
+  const getRecommendComics = useCallback(async () => {
+    console.log('getRecommendComics')
+    const { body } = await comicsClient.comics.recommend.query()
+    setRecommendComics(body as IComic[])
+    setIsPaused(false)
+  }, [])
+
+  useEffect(() => {
+    console.log('mounted')
+    getRecommendComics()
+  }, [getRecommendComics])
+
+  // const recommendComics = comicsClient.comics.recommend.useQuery(['recommend'])
+  const trendingComics = comicsClient.comics.trending.useQuery(
+    ['trending'],
+    {},
+    { queryKey: ['trending'], enabled: !isPaused }
+  )
+  const completedComics = comicsClient.comics.completedComics.useQuery(
+    ['completed'],
+    {},
+    { queryKey: ['completed'], enabled: !isPaused }
+  )
+  const recentlyUpdateComics = comicsClient.comics.recentlyUpdateComics.useQuery(
+    ['recently'],
+    {},
+    { queryKey: ['recently'], enabled: !isPaused }
+  )
+  const boyComics = comicsClient.comics.boyComics.useQuery(['boy'], {}, { queryKey: ['boy'], enabled: !isPaused })
+  const girlComics = comicsClient.comics.girlComics.useQuery(['girl'], {}, { queryKey: ['girl'], enabled: !isPaused })
 
   return (
     <main className="max-w-[72rem] mx-auto py-5 px-3">
-      {isLoading ? (
+      {isPaused ? (
         <ListSkeletonCards
           count={6}
           smallCard
@@ -58,7 +83,7 @@ export default function Home() {
             },
           }}
         >
-          {recommendComics.data?.body.map((comic) => (
+          {recommendComics.map((comic) => (
             <SwiperSlide key={comic.id}>
               <ComicCard
                 key={comic.id}
@@ -68,56 +93,41 @@ export default function Home() {
           ))}
         </Swiper>
       )}
-      {isLoading ? (
-        <ListSkeletonCards count={6} />
-      ) : (
-        <ComicsSlide
-          title="Truyện nổi tiếng"
-          comics={trendingComics.data?.body.comics}
-          icon="radix/popular"
-          link="/popular"
-        />
-      )}
-      {isLoading ? (
-        <ListSkeletonCards count={6} />
-      ) : (
-        <ComicsSlide
-          title="Truyện đã hoàn thành"
-          comics={completedComics.data?.body.comics}
-          icon="radix/completed"
-          link="/completed"
-        />
-      )}
-      {isLoading ? (
-        <ListSkeletonCards count={6} />
-      ) : (
-        <ComicsSlide
-          title="Truyện mới cập nhật"
-          comics={recentlyUpdateComics.data?.body.comics}
-          icon="radix/recently"
-          link="/recently-update"
-        />
-      )}
-      {isLoading ? (
-        <ListSkeletonCards count={6} />
-      ) : (
-        <ComicsSlide
-          title="Truyện cho con trai"
-          comics={boyComics.data?.body.comics}
-          icon="radix/boy"
-          link="/boy"
-        />
-      )}
-      {isLoading ? (
-        <ListSkeletonCards count={6} />
-      ) : (
-        <ComicsSlide
-          title="Truyện cho con gái"
-          comics={girlComics.data?.body.comics}
-          icon="radix/girl"
-          link="/girl"
-        />
-      )}
+      <ComicsSlide
+        title="Truyện nổi tiếng"
+        comics={trendingComics.data?.body.comics}
+        icon="radix/popular"
+        link="/popular"
+        isLoading={trendingComics.isLoading}
+      />
+      <ComicsSlide
+        title="Truyện đã hoàn thành"
+        comics={completedComics.data?.body.comics}
+        icon="radix/completed"
+        link="/completed"
+        isLoading={completedComics.isLoading}
+      />
+      <ComicsSlide
+        title="Truyện mới cập nhật"
+        comics={recentlyUpdateComics.data?.body.comics}
+        icon="radix/recently"
+        link="/recently-update"
+        isLoading={recentlyUpdateComics.isLoading}
+      />
+      <ComicsSlide
+        title="Truyện cho con trai"
+        comics={boyComics.data?.body.comics}
+        icon="radix/boy"
+        link="/boy"
+        isLoading={boyComics.isLoading}
+      />
+      <ComicsSlide
+        title="Truyện cho con gái"
+        comics={girlComics.data?.body.comics}
+        icon="radix/girl"
+        link="/girl"
+        isLoading={girlComics.isLoading}
+      />
     </main>
   )
 }

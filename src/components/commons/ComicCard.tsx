@@ -8,8 +8,10 @@ import { z } from 'zod'
 import { Comic } from '~/lib/schemas'
 import { cn } from '~/lib/utils'
 
+export type IComic = z.infer<typeof Comic> & { last_reading?: string; chapter_id?: number }
+
 export type ComicCardProps = {
-  comic: z.infer<typeof Comic> & { last_reading?: string; chapter_id?: number }
+  comic: IComic
   detail?: boolean
   isHistory?: boolean
 }
