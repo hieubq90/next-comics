@@ -1,9 +1,9 @@
 import { z } from 'zod'
 
 export const Genre = z.object({
-  id: z.string(),
-  name: z.string(),
-  description: z.string(),
+  id: z.string().optional(),
+  name: z.string().optional(),
+  description: z.string().optional(),
 })
 
 export const SuggestedItem = z.object({
@@ -31,6 +31,7 @@ export const Comic = z.object({
   title: z.string(),
   thumbnail: z.string(),
   is_trending: z.boolean(),
+  description: z.string(),
   short_description: z.string(),
   lastest_chapters: z.array(
     z.object({
@@ -43,6 +44,12 @@ export const Comic = z.object({
     z.object({
       id: z.string().optional(),
       name: z.string().optional(),
+    })
+  ),
+  chapters: z.array(
+    z.object({
+      id: z.number(),
+      name: z.string(),
     })
   ),
   other_names: z.union([z.array(z.string()), z.string()]),
