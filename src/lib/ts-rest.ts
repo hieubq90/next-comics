@@ -171,7 +171,7 @@ const comicContact = c.router({
       comic_id: z.string(),
     }),
     responses: {
-      200: GetComicsResult,
+      200: Comic,
     },
     summary: 'get comic detail',
   },

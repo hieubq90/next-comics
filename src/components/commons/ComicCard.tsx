@@ -5,13 +5,10 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import * as React from 'react'
 import { ImSpinner } from 'react-icons/im'
-import { z } from 'zod'
-import { Comic } from '~/lib/schemas'
 import { cn } from '~/lib/utils'
+import { IComic } from '~/types'
 
 import { Icon } from './Icon'
-
-export type IComic = z.infer<typeof Comic> & { last_reading?: string; chapter_id?: number }
 
 export type ComicCardProps = {
   comic: IComic
