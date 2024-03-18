@@ -3,9 +3,10 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Autoplay } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { ComicCard, IComic } from '~/components/commons/ComicCard'
+import { ComicCard } from '~/components/commons/ComicCard'
 import ComicsSlide from '~/components/commons/ComicsSlide'
 import { ListSkeletonCards } from '~/components/commons/SkeletonCard'
+import { IComic } from '~/types'
 
 import { comicsClient } from './providers'
 
