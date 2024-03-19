@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 
+import { useCallback } from 'react'
 import { Icon } from '~/components/commons/Icon'
 import { IComic } from '~/types'
 
@@ -7,7 +8,9 @@ import Authors from './Authors'
 import Genres from './Genres'
 import Stats from './Stats'
 
-const ComicInfo = ({ comic }: { comic: IComic }) => {
+const ComicInfo = ({ comic, readNow }: { comic: IComic; readNow: () => void }) => {
+  const handleReadNow = useCallback(() => {}, [])
+
   return (
     <>
       <div className="absolute top-0 inset-x-0 h-80 bg-gradient-to-b from-emerald-100 -z-10" />
@@ -42,6 +45,7 @@ const ComicInfo = ({ comic }: { comic: IComic }) => {
                 comic.chapters.length ? 'border-emerald-500 bg-emerald-500' : 'border-gray-500 bg-gray-500'
               }`}
               disabled={!comic.chapters.length}
+              onClick={() => readNow()}
             >
               <Icon
                 name="radix/history"
