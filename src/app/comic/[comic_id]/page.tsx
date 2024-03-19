@@ -1,22 +1,31 @@
-'use client'
+// import { comicsClient } from '~/app/providers'
 
-import { comicsClient } from '~/app/providers'
+import { comicsClient } from '~/lib/ts-rest'
 
-import ComicInfo from './ComicInfo'
+import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
 
-export default function Page({ params }: { params: { comic_id: string } }) {
+import Comic from './Comic'
+
+export default async function ComicPage({ params }: { params: { comic_id: string } }) {
   const { comic_id } = params
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+        staleTime: 5 * 1000,
+      },
+    },
+  })
 
-  const comidDetail = comicsClient.comics.detail.useQuery(['detail', comic_id], { params: { comic_id } })
+  await queryClient.prefetchQuery({
+    queryKey: ['detail', comic_id],
+    queryFn: async (_params) => await comicsClient.comics.detail({ params: { comic_id } }),
+  })
 
   return (
-    <div className="relative pt-12 px-4 min-h-screen">
-      {comidDetail.isLoading ? 'Loading' : null}
-      {!comidDetail.isLoading && comidDetail.data ? (
-        <>
-          <ComicInfo comic={comidDetail.data?.body} />
-        </>
-      ) : null}
-    </div>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <Comic comicId={comic_id} />
+    </HydrationBoundary>
   )
 }
