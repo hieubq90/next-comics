@@ -62,7 +62,7 @@ const Chapters = ({ comic }: { comic: IComic }) => {
             <div className="grid gap-x-2 gap-y-2 grid-cols-9 my-5 text-gray-800 font-semibold text-sm">
               {chapterPages.map((_, idx) => (
                 <button
-                  key={`page_idx`}
+                  key={`page_${idx}`}
                   className={cn(
                     'px-2 py-0.5 rounded-full',
                     idx === currentChapterPage ? 'bg-emerald-100 text-emerald-500' : 'bg-gray-100'
