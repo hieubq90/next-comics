@@ -4,7 +4,7 @@ import { unknown, z } from 'zod'
 import { initClient, initContract } from '@ts-rest/core'
 
 import { httpClient } from './axios'
-import { Chapter, Comic, Genre, GetComicsResult, SuggestedItem } from './schemas'
+import { Chapter, ChapterDetail, Comic, Genre, GetComicsResult, SuggestedItem } from './schemas'
 
 const c = initContract()
 
@@ -194,7 +194,7 @@ const comicContact = c.router({
       chapter_id: z.string(),
     }),
     responses: {
-      200: GetComicsResult,
+      200: ChapterDetail,
     },
     summary: 'get comic detail',
   },

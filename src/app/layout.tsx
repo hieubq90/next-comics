@@ -1,10 +1,12 @@
 import type { Metadata } from 'next'
 import '~/assets/styles/main.scss'
 
+import { Suspense } from 'react'
 import { register } from 'swiper/element'
 // import { Toaster } from 'react-hot-toast'
 import { baloo2, quicksand } from '~/assets/fonts'
 import Header from '~/components/layout/Header'
+import Loading from '~/components/layout/Loading'
 import { Toaster } from '~/components/ui/sonner'
 
 import { Providers } from './providers'
@@ -53,7 +55,7 @@ export default function RootLayout({
             className="fixed w-full overflow-y-scroll"
             style={{ maxHeight: 'calc(100vh - 65px)' }}
           >
-            {children}
+            <Suspense>{children}</Suspense>
           </div>
           <Toaster />
         </Providers>
