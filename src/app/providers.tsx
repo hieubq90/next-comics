@@ -1,6 +1,7 @@
 'use client'
 
 import { AxiosError, AxiosResponse, isAxiosError, Method } from 'axios'
+import { error } from 'console'
 import { useState } from 'react'
 import { unknown } from 'zod'
 import { httpClient } from '~/lib/axios'
@@ -27,11 +28,9 @@ export const comicsClient = initQueryClient(comicsApi, {
       return { status: result.status, body: result.data, headers: new Headers() }
     } catch (e: Error | AxiosError | any) {
       if (isAxiosError(e)) {
-        const error = e as AxiosError
-        const response = error.response as AxiosResponse
-        return { status: response.status, body: response.data, headers: new Headers() }
+        return { status: 500, body: e.message, headers: new Headers() }
       }
-      return { status: 500, body: unknown, headers: new Headers() }
+      throw e
     }
   },
   credentials: 'omit',
@@ -46,6 +45,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
             refetchOnMount: false,
             refetchOnWindowFocus: false,
             staleTime: 5 * 1000,
+            retry: 0,
           },
         },
       })

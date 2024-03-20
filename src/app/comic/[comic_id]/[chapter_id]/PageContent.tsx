@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { cn } from '~/lib/utils'
 
 const PageContent = React.forwardRef<
   HTMLDivElement,
@@ -15,7 +16,7 @@ const PageContent = React.forwardRef<
       ref={ref}
     >
       <div className="page-content">
-        {header && <h2 className="page-header">{header}</h2>}
+        {header && <span className={cn('page-header', number % 2 === 0 && '!text-right')}>{header}</span>}
         <div
           className="page-image"
           style={{

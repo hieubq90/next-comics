@@ -219,11 +219,9 @@ export const comicsClient = initClient(comicsApi, {
       return { status: result.status, body: result.data, headers: new Headers() }
     } catch (e: Error | AxiosError | any) {
       if (isAxiosError(e)) {
-        const error = e as AxiosError
-        const response = error.response as AxiosResponse
-        return { status: response.status, body: response.data, headers: new Headers() }
+        return { status: 500, body: e.message, headers: new Headers() }
       }
-      return { status: 500, body: unknown, headers: new Headers() }
+      throw e
     }
   },
   credentials: 'omit',

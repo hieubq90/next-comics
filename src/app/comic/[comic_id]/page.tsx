@@ -14,6 +14,7 @@ export default async function ComicPage({ params }: { params: { comic_id: string
         refetchOnMount: false,
         refetchOnWindowFocus: false,
         staleTime: 5 * 1000,
+        retry: 0,
       },
     },
   })
