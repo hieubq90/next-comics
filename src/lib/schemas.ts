@@ -26,6 +26,11 @@ export const RecommendComic = z.object({
   }),
 })
 
+export const Chapter = z.object({
+  id: z.number(),
+  name: z.string(),
+})
+
 export const Comic = z.object({
   id: z.string(),
   title: z.string(),
@@ -46,12 +51,7 @@ export const Comic = z.object({
       name: z.string().optional(),
     })
   ),
-  chapters: z.array(
-    z.object({
-      id: z.number(),
-      name: z.string(),
-    })
-  ),
+  chapters: z.array(Chapter),
   other_names: z.union([z.array(z.string()), z.string()]),
   status: z.string(),
   total_views: z.string(),
@@ -65,4 +65,18 @@ export const GetComicsResult = z.object({
   comics: z.array(Comic),
   total_pages: z.number(),
   current_page: z.number(),
+})
+
+export const ChapterDetail = z.object({
+  images: z.array(
+    z.object({
+      page: z.number(),
+      src: z.string(),
+      backup_url_1: z.string(),
+      backup_url_2: z.string(),
+    })
+  ),
+  chapters: z.array(Chapter),
+  chapter_name: z.string(),
+  comic_name: z.string(),
 })
