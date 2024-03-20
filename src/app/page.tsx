@@ -46,7 +46,7 @@ export default function Home() {
   const girlComics = comicsClient.comics.girlComics.useQuery(['girl'], {}, { queryKey: ['girl'], enabled: !isPaused })
 
   return (
-    <main className="max-w-[72rem] mx-auto py-5 px-3">
+    <main className="max-w-[72rem] mx-auto pt-5 pb-16 px-3">
       {isPaused ? (
         <ListSkeletonCards
           count={6}

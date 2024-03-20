@@ -2,20 +2,29 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { useParams, usePathname } from 'next/navigation'
 import * as React from 'react'
 import {
     NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList,
     navigationMenuTriggerStyle
 } from '~/components/ui/navigation-menu'
+import { cn } from '~/lib/utils'
 
 import ModeToggle from './ModeToggle'
 
 const Header: React.FC = () => {
   const pathname = usePathname()
+  const { comic_id, chapter_id } = useParams<{ comic_id: string; chapter_id: string }>()
+
+  const isReading = React.useMemo(() => !!chapter_id, [chapter_id])
 
   return (
-    <header className="sticky top-0 z-40 w-full flex-none backdrop-blur transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 supports-backdrop-blur:bg-white/60 bg-white/80 dark:border-slate-50/[0.06] dark:bg-transparent">
+    <header
+      className={cn(
+        'sticky top-0 z-40 w-full flex-none backdrop-blur transition-colors duration-500 lg:z-50 lg:border-b lg:border-slate-900/10 supports-backdrop-blur:bg-white/60 bg-white/80 dark:border-slate-50/[0.06] dark:bg-transparent',
+        isReading && 'hidden'
+      )}
+    >
       <div className="mx-auto max-w-[90rem]">
         <div className="mx-4 border-b border-slate-900/10 py-2 dark:border-slate-300/10 lg:border-0">
           <div className="relative flex items-center">
