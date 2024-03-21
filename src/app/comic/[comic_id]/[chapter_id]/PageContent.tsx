@@ -6,7 +6,7 @@ const PageContent = React.forwardRef<
   { header?: string; number: number; images: string[]; children?: React.ReactNode }
 >(({ header, number, children, images = [] }, ref) => {
   const bgImage = React.useMemo(() => {
-    const src = images.map((link) => `url("https://comics-api.hieubq.io.vn/v1${link}")`)
+    const src = images.map((link) => `url("https://cicdn.hieubq.io.vn/v1${link}")`)
     return src.join(', ')
   }, [images])
 
