@@ -26,7 +26,13 @@ export default function Chapter({ comicId, chapterId }: { comicId: string; chapt
         `isError: ${isError} - error: ${JSON.stringify(error)}`
       ) : (
         <>
-          {readingMode === 'web' && <WebReader chapter={data.body} />}
+          {readingMode === 'web' && (
+            <WebReader
+              comicId={comicId}
+              chapterId={chapterId}
+              chapter={data.body}
+            />
+          )}
           {readingMode === 'book' && (
             <BookReader
               ref={bookReader}

@@ -3,6 +3,7 @@
 export type IconName =
 	| "radix/avatar"
 	| "radix/boy"
+	| "radix/caret-right"
 	| "radix/chat-bubble"
 	| "radix/clock"
 	| "radix/comic"
