@@ -19,6 +19,16 @@ const WebReader = React.forwardRef<HTMLDivElement, { comicId: string; chapterId:
       [showToolbar]
     )
 
+    // const handleChangeChapter = (type: 'prev' | 'next') => {
+    //   isChangingEpisode.value = true;
+    //   const episodes = [...chapters].reverse();
+    //   const chapterIdx = episodes.findIndex(
+    //     (chapter: any) => chapter.id === Number(chapterId)
+    //   );
+    //   const nextChapterIdx = chapterIdx + (type === 'next' ? 1 : -1);
+    //   navigateTo(`/comic/${comicId}/${episodes[nextChapterIdx].id}`);
+    // };
+
     return (
       <div
         ref={ref}
@@ -37,6 +47,7 @@ const WebReader = React.forwardRef<HTMLDivElement, { comicId: string; chapterId:
             />
           ))}
         </div>
+        {/* HEADER */}
         <div
           className="fixed inset-0"
           onClick={handleShowToolbar}
@@ -53,6 +64,40 @@ const WebReader = React.forwardRef<HTMLDivElement, { comicId: string; chapterId:
               className="mx-2 text-md"
             />
             <span>{chapter.chapter_name}</span>
+          </div>
+        </div>
+        {/* FOOTER */}
+        <div
+          className={cn(
+            'select-none absolute flex items-center flex-col-reverse justify-center gap-3 lg:flex-row lg:gap-8 py-2 bottom-0 inset-x-0 bg-[rgba(0,0,0,0.75)] text-gray-400 text-sm font-semibold duration-300',
+            showToolbar ? 'translate-y-0 opacity-1' : 'translate-y-full opacity-0'
+          )}
+        >
+          <div className="flex items-center gap-3">
+            {chapter.chapters.length > 0 && parseInt(chapterId) !== chapter.chapters.at(-1)?.id ? (
+              <button
+                className={cn(
+                  'px-3 py-1 rounded-full',
+                  parseInt(chapterId) === chapter.chapters.at(-1)?.id
+                    ? 'bg-gray-200 text-gray-500'
+                    : 'bg-emerald-200 text-emerald-500 '
+                )}
+              >
+                Phần trước
+              </button>
+            ) : null}
+            {chapter.chapters.length > 0 && parseInt(chapterId) !== chapter.chapters[0]?.id && (
+              <button
+                className={cn(
+                  'px-3 py-1 rounded-full',
+                  parseInt(chapterId) === chapter.chapters[0]?.id
+                    ? 'bg-gray-200 text-gray-500'
+                    : 'bg-emerald-200 text-emerald-500 '
+                )}
+              >
+                Phần tiếp theo
+              </button>
+            )}
           </div>
         </div>
       </div>
