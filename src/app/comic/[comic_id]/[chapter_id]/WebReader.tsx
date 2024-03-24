@@ -39,7 +39,7 @@ const WebReader = React.forwardRef<HTMLDivElement, { comicId: string; chapterId:
             // eslint-disable-next-line @next/next/no-img-element
             <Image
               key={img.page}
-              src={`https://cicdn.hieubq.io.vn/v1${img.src}`}
+              src={`https://imgproxy.hieubq.io.vn/index.php${img.src}`}
               alt={`page_${img.page}`}
               className="w-[800px] !h-auto"
               width={800}
