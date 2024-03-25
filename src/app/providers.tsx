@@ -1,9 +1,8 @@
 'use client'
 
-import { AxiosError, AxiosResponse, isAxiosError, Method } from 'axios'
-import { error } from 'console'
+import { AxiosError, isAxiosError, Method } from 'axios'
+import { AppProgressBar as ProgressBar } from 'next-nprogress-bar'
 import { useState } from 'react'
-import { unknown } from 'zod'
 import { httpClient } from '~/lib/axios'
 import { comicsApi } from '~/lib/ts-rest'
 
@@ -51,18 +50,26 @@ export function Providers({ children }: { children: React.ReactNode }) {
       })
   )
   return (
-    <QueryClientProvider client={queryClient}>
-      <ReactQueryStreamedHydration>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
-      </ReactQueryStreamedHydration>
-      {process.env.NODE_ENV === 'development' && <ReactQueryDevtools initialIsOpen={false} />}
-    </QueryClientProvider>
+    <>
+      <QueryClientProvider client={queryClient}>
+        <ReactQueryStreamedHydration>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </ReactQueryStreamedHydration>
+        {process.env.NODE_ENV === 'development' && <ReactQueryDevtools initialIsOpen={false} />}
+      </QueryClientProvider>
+      <ProgressBar
+        height="2px"
+        color="#10B981"
+        options={{ showSpinner: true }}
+        shallowRouting
+      />
+    </>
   )
 }
