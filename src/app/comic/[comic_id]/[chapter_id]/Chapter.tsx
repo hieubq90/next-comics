@@ -31,6 +31,7 @@ export default function Chapter({ comicId, chapterId }: { comicId: string; chapt
               comicId={comicId}
               chapterId={chapterId}
               chapter={data.body}
+              changeMode={() => setReadingMode('book')}
             />
           )}
           {readingMode === 'book' && (
