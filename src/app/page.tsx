@@ -27,23 +27,23 @@ export default function Home() {
   }, [getRecommendComics])
 
   // const recommendComics = comicsClient.comics.recommend.useQuery(['recommend'])
-  const trendingComics = comicsClient.comics.trending.useQuery(
-    ['trending'],
-    {},
-    { queryKey: ['trending'], enabled: !isPaused }
-  )
-  const completedComics = comicsClient.comics.completedComics.useQuery(
-    ['completed'],
-    {},
-    { queryKey: ['completed'], enabled: !isPaused }
-  )
+  // const trendingComics = comicsClient.comics.trending.useQuery(
+  //   ['trending'],
+  //   {},
+  //   { queryKey: ['trending'], enabled: !isPaused }
+  // )
+  // const completedComics = comicsClient.comics.completedComics.useQuery(
+  //   ['completed'],
+  //   {},
+  //   { queryKey: ['completed'], enabled: !isPaused }
+  // )
   const recentlyUpdateComics = comicsClient.comics.recentlyUpdateComics.useQuery(
     ['recently'],
     {},
     { queryKey: ['recently'], enabled: !isPaused }
   )
-  const boyComics = comicsClient.comics.boyComics.useQuery(['boy'], {}, { queryKey: ['boy'], enabled: !isPaused })
-  const girlComics = comicsClient.comics.girlComics.useQuery(['girl'], {}, { queryKey: ['girl'], enabled: !isPaused })
+  // const boyComics = comicsClient.comics.boyComics.useQuery(['boy'], {}, { queryKey: ['boy'], enabled: !isPaused })
+  // const girlComics = comicsClient.comics.girlComics.useQuery(['girl'], {}, { queryKey: ['girl'], enabled: !isPaused })
 
   return (
     <main className="max-w-[72rem] mx-auto pt-5 pb-16 px-3">
@@ -95,39 +95,11 @@ export default function Home() {
         </Swiper>
       )}
       <ComicsSlide
-        title="Truyện nổi tiếng"
-        comics={trendingComics.data?.body.comics}
-        icon="radix/popular"
-        link="/popular"
-        isLoading={trendingComics.isLoading}
-      />
-      <ComicsSlide
-        title="Truyện đã hoàn thành"
-        comics={completedComics.data?.body.comics}
-        icon="radix/completed"
-        link="/completed"
-        isLoading={completedComics.isLoading}
-      />
-      <ComicsSlide
         title="Truyện mới cập nhật"
         comics={recentlyUpdateComics.data?.body.comics}
         icon="radix/recently"
         link="/recently-update"
         isLoading={recentlyUpdateComics.isLoading}
-      />
-      <ComicsSlide
-        title="Truyện cho con trai"
-        comics={boyComics.data?.body.comics}
-        icon="radix/boy"
-        link="/boy"
-        isLoading={boyComics.isLoading}
-      />
-      <ComicsSlide
-        title="Truyện cho con gái"
-        comics={girlComics.data?.body.comics}
-        icon="radix/girl"
-        link="/girl"
-        isLoading={girlComics.isLoading}
       />
     </main>
   )

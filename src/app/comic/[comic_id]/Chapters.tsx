@@ -1,15 +1,16 @@
 'use client'
 
-import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useMemo, useState } from 'react'
 import { Icon } from '~/components/commons/Icon'
-import { cn } from '~/lib/utils'
+import { Button } from '~/components/ui/button'
 import { IComic } from '~/types'
 
 const CHAPTER_PER_PAGE = 50
 
 const Chapters = ({ comic }: { comic: IComic }) => {
   const newestChapter = useMemo(() => comic.chapters[0]?.name.match(/\d+(\.\d+)?/)?.[0], [comic])
+  const router = useRouter()
 
   const totalChapterPage = useMemo(() => {
     return !isNaN(Number(newestChapter)) ? Math.ceil(Number(newestChapter) / CHAPTER_PER_PAGE) : 0
@@ -41,12 +42,12 @@ const Chapters = ({ comic }: { comic: IComic }) => {
   return (
     <div className="max-w-5xl mx-auto mt-5">
       <div className="flex items-center gap-6 font-bold text-lg sm:text-xl border-b-2 py-1">
-        <span className="flex items-center gap-1 text-emerald-500">
+        <span className="flex items-center gap-1 text-primary uppercase">
           <Icon
             name="radix/comic"
             className="text-[2rem]"
           />
-          Chương
+          Danh sách chương
         </span>
       </div>
       <div>
@@ -55,35 +56,34 @@ const Chapters = ({ comic }: { comic: IComic }) => {
             className="mt-6 text-center text-2xl font-bold text-gray-700 select-none"
             v-if=""
           >
-            No Chapter
+            Không có chương nào
           </h4>
         ) : (
           <>
-            <div className="grid gap-x-2 gap-y-2 grid-cols-9 my-5 text-gray-800 font-semibold text-sm">
+            <div className="grid gap-x-2 gap-y-2 grid-cols-3 md:grid-cols-9  my-5 text-gray-800 font-semibold text-sm">
               {chapterPages.map((_, idx) => (
-                <button
+                <Button
                   key={`page_${idx}`}
-                  className={cn(
-                    'px-2 py-0.5 rounded-full',
-                    idx === currentChapterPage ? 'bg-emerald-100 text-emerald-500' : 'bg-gray-100'
-                  )}
+                  variant={idx === currentChapterPage ? undefined : 'outline'}
+                  className="uppercase dark:text-white"
                   onClick={() => setCurrentChapterPage(idx)}
                 >
                   {idx + 1 < totalChapterPage
                     ? `${idx === 0 ? 0 : idx * CHAPTER_PER_PAGE + 1} - ${(idx + 1) * CHAPTER_PER_PAGE}`
                     : `${totalChapterPage === 1 ? 0 : idx * CHAPTER_PER_PAGE + 1} - ${newestChapter}`}
-                </button>
+                </Button>
               ))}
             </div>
             <ul className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {chaptersSection.map((chapter) => (
-                <Link
+                <Button
                   key={`chapter_${chapter.id}`}
-                  className="border rounded px-3 py-2 truncate hover:bg-emerald-50 duration-100"
-                  href={`/comic/${comic.id}/${chapter.id}`}
+                  className="uppercase dark:text-white"
+                  variant="outline"
+                  onClick={() => router.push(`/comic/${comic.id}/${chapter.id}`)}
                 >
-                  <span className="no-underline">{chapter.name}</span>
-                </Link>
+                  {chapter.name}
+                </Button>
               ))}
             </ul>
           </>

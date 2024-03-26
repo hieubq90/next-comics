@@ -3,8 +3,8 @@ import { ImSpinner } from 'react-icons/im'
 
 const Authors = ({ authors }: { authors: String[] | String }) => {
   return (
-    <div className="font-semibold flex items-center gap-2 my-1">
-      Tác giả:
+    <div className="font-semibold flex items-center gap-2 my-1 text-fuchsia-500">
+      <span className="font-bold">Tác giả:</span>
       {Array.isArray(authors) ? (
         authors.map((author, idx) => (
           <div key={`author_${idx}`}>
@@ -26,7 +26,7 @@ const Authors = ({ authors }: { authors: String[] | String }) => {
         <span className="flex items-center gap-1">
           <ImSpinner
             size="16"
-            className="animate-spin text-emerald-500"
+            className="animate-spin"
           />
           Updating
         </span>
