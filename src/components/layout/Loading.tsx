@@ -2,7 +2,7 @@ import styles from './Loading.module.scss'
 
 export default function Loading() {
   return (
-    <div className="fixed z-50 inset-0 bg-transparent flex items-center justify-center duration-300">
+    <div className="fixed z-50 inset-0 bg-[#00000066] flex items-center justify-center duration-300">
       <svg
         className={styles.pl}
         viewBox="0 0 200 200"
