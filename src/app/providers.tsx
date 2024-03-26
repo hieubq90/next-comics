@@ -44,7 +44,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
             refetchOnMount: false,
             refetchOnWindowFocus: false,
             staleTime: 5 * 1000,
-            retry: 0,
+            retry: 1,
           },
         },
       })

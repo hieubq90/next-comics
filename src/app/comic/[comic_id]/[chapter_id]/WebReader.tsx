@@ -26,6 +26,7 @@ const WebReader = React.forwardRef<
   const [showToolbar, setShowToolbar] = React.useState<boolean>(true)
   const [currentPage, setCurrentPage] = React.useState<number>(1)
   const [firstRender, setFirstRender] = React.useState<boolean>(true)
+  const [server, setServer] = React.useState<number>(0)
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
   React.useEffect(() => {
@@ -90,25 +91,44 @@ const WebReader = React.forwardRef<
     el?.scrollIntoView()
   }, [])
 
-  return (
-    <div
-      ref={ref}
-      className="bg-zinc-900 min-h-screen"
-    >
-      <div className="flex flex-col max-w-2xl mx-auto">
+  const handleChangeServer = React.useCallback(() => {
+    setIsLoading(true)
+    setServer((server + 1) % 3)
+    setTimeout(() => setIsLoading(false), 500)
+  }, [server])
+
+  const renderImages = React.useMemo(() => {
+    return (
+      <>
         {chapter.images &&
           chapter.images.map((img) => (
             // eslint-disable-next-line @next/next/no-img-element
             <Image
               id={`${img.page}`}
               key={img.page}
-              src={`https://imgproxy.hieubq.io.vn/index.php${img.src}`}
+              src={`https://imgproxy.hieubq.io.vn/index.php${
+                server === 0 ? img.src : server === 1 ? img.backup_url_1 : img.backup_url_2
+              }`}
               alt={`page_${img.page}`}
               className="w-[800px] !h-auto image-source"
               width={800}
               height={800}
             />
           ))}
+      </>
+    )
+  }, [chapter.images, server])
+
+  return (
+    <div
+      ref={ref}
+      className="bg-zinc-900 min-h-screen"
+    >
+      <div
+        id={`server_${server}`}
+        className="flex flex-col max-w-2xl mx-auto"
+      >
+        {isLoading ? null : renderImages}
       </div>
 
       <div
@@ -122,6 +142,11 @@ const WebReader = React.forwardRef<
             showToolbar ? 'translate-y-0 opacity-1' : '-translate-y-full opacity-0'
           )}
         >
+          <Link href="/">Trang chủ</Link>
+          <Icon
+            name="radix/caret-right"
+            className="mx-2 text-md"
+          />
           <Link href={`/comic/${comicId as string}`}>{chapter.comic_name}</Link>
           <Icon
             name="radix/caret-right"
@@ -163,15 +188,15 @@ const WebReader = React.forwardRef<
               <PopoverTrigger asChild>
                 <Button
                   variant="outline"
-                  className="w-[200px] justify-between bg-transparent hover:border-primary hover:bg-transparent data-[state=open]:border-primary data-[state=open]:bg-transparent"
+                  className="w-[150px] justify-between bg-transparent hover:border-primary hover:bg-transparent data-[state=open]:border-primary data-[state=open]:bg-transparent"
                   onClick={openChapterList}
                 >
                   {chapter.chapter_name}
                   <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50 text-white" />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="dark w-80">
-                <div className="p-2 font-bold">{`Có ${chapter.chapters?.length || 0} chương`}</div>
+              <PopoverContent className="dark w-80 p-0">
+                <div className="p-4 font-bold">{`Có ${chapter.chapters?.length || 0} chương`}</div>
                 <ScrollArea className="w-full h-[300px]">
                   <div className="">
                     {chapter.chapters
@@ -181,7 +206,7 @@ const WebReader = React.forwardRef<
                             key={`chapter_${c.id}`}
                             href={`/comic/${comicId}/${c.id}`}
                             className={cn(
-                              'py-2 block max-w-78 truncate px-2 duration-100 hover:bg-zinc-950',
+                              'px-4 py-2 block max-w-78 truncate duration-100 hover:bg-zinc-950',
                               c.id === Number(chapterId) ? 'text-primary font-bold' : ''
                             )}
                           >
@@ -207,7 +232,17 @@ const WebReader = React.forwardRef<
               orientation="vertical"
               className="h-6"
             />
-            <div className="flex items-center space-x-2">
+            <Button
+              size="icon"
+              onClick={handleChangeServer}
+            >
+              <Icon
+                name="radix/reload"
+                className="h-4 w-4"
+              />
+              {server + 1}
+            </Button>
+            <div className="flex items-center space-x-2 hidden lg:flex">
               <Switch
                 id="reading-mode"
                 checked={false}
