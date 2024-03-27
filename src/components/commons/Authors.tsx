@@ -1,0 +1,45 @@
+import Link from 'next/link'
+import { ImSpinner } from 'react-icons/im'
+
+export const Authors = ({ authors }: { authors: String[] | String }) => {
+  return (
+    <div className="font-semibold flex items-center gap-2 my-1 text-fuchsia-500">
+      <span className="font-bold">Tác giả:</span>
+      {Array.isArray(authors) ? (
+        authors.map((author, idx) => (
+          <div key={`author_${idx}`}>
+            <Link
+              href={`/search?q=${author.replace(/\s+/g, '+')}`}
+              className="text-fuchsia-500"
+            >
+              {author}
+            </Link>
+            <span
+              className="select-none"
+              v-if="idx < comic.authors.length - 1"
+            >
+              -
+            </span>
+          </div>
+        ))
+      ) : authors === 'Updating' ? (
+        <span className="flex items-center gap-1">
+          <ImSpinner
+            size="16"
+            className="animate-spin"
+          />
+          Updating
+        </span>
+      ) : (
+        <Link
+          href={`/search?q=${authors.replace(/\s+/g, '+')}`}
+          className="text-fuchsia-500"
+        >
+          {authors}
+        </Link>
+      )}
+    </div>
+  )
+}
+
+export default Authors
