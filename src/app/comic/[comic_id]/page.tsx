@@ -1,5 +1,3 @@
-// import { comicsClient } from '~/app/providers'
-
 import { comicsClient } from '~/lib/ts-rest'
 
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
@@ -14,7 +12,7 @@ export default async function ComicPage({ params }: { params: { comic_id: string
         refetchOnMount: false,
         refetchOnWindowFocus: false,
         staleTime: 5 * 1000,
-        retry: 0,
+        retry: 1,
       },
     },
   })
