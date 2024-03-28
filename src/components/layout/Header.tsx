@@ -5,8 +5,11 @@ import Link from 'next/link'
 import { useParams, usePathname } from 'next/navigation'
 import * as React from 'react'
 import {
-    NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList,
-    navigationMenuTriggerStyle
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  navigationMenuTriggerStyle,
 } from '~/components/ui/navigation-menu'
 import { cn } from '~/lib/utils'
 
@@ -29,7 +32,7 @@ const Header: React.FC = () => {
         <div className="mx-4 border-b border-slate-900/10 py-2 dark:border-slate-300/10 lg:border-0">
           <div className="relative flex items-center">
             <a
-              className="mr-3 w-[2.0625rem] flex items-center overflow-hidden md:w-auto"
+              className="mr-3 flex items-center overflow-hidden w-auto"
               title="Trang chủ Dư Thanh Được"
               href="/"
             >

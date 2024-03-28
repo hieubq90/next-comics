@@ -5,7 +5,12 @@ import * as React from 'react'
 import { comicsClient } from '~/app/providers'
 import { Button } from '~/components/ui/button'
 import {
-    Carousel, CarouselApi, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
+  Carousel,
+  CarouselApi,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 } from '~/components/ui/carousel'
 import { cn } from '~/lib/utils'
 
@@ -21,7 +26,7 @@ export default function TrendingComics() {
   const [current, setCurrent] = React.useState(0)
 
   const currentComic = React.useMemo(() => {
-    return trendingComics.data?.body.comics[current]
+    return trendingComics.data?.body?.comics[current] || undefined
   }, [current, trendingComics.data?.body.comics])
 
   React.useEffect(() => {
@@ -40,36 +45,46 @@ export default function TrendingComics() {
     <>
       {trendingComics.isLoading && <div>LOADING</div>}
       {!trendingComics.isLoading && !trendingComics.isError && trendingComics.data ? (
-        <div className={cn('w-full min-h-[400px] rounded-2xl py-8 px-28', styles.trending_container)}>
-          <div className="max-w-[50%] sm:col-span-3">
-            <h4 className="text-3xl font-extrabold mt-5 sm:mt-0">{currentComic?.title}</h4>
-            <p className="mb-3 mt-1 text-sm font-semibold text-gray-400">
-              {Array.isArray(currentComic?.other_names)
-                ? currentComic.other_names.join(' | ')
-                : currentComic?.other_names}
-            </p>
-            {/* <Genres genres={currentComic?.genres || []} /> */}
-            <Authors authors={currentComic?.authors || []} />
-            <Stats
-              total_views={currentComic?.total_views || '0'}
-              followers={currentComic?.followers || '0'}
-            />
-            {currentComic?.description && (
-              <div className="mt-2">
-                <p className="line-clamp-3">{currentComic?.description.replace(/NetTruyen/g, 'NextComics')}</p>
+        <div
+          className={cn(
+            'w-full min-h-[400px] rounded-2xl p-4 md:pl-16 flex md:flex-row flex-col-reverse items-center justify-between text-white',
+            styles.trending_container
+          )}
+        >
+          {currentComic ? (
+            <div className="sm:text-center">
+              <h4 className="text-3xl font-extrabold mt-5 sm:mt-0">{currentComic?.title}</h4>
+              <p className="mb-3 mt-1 text-sm font-semibold text-gray-400">
+                {Array.isArray(currentComic?.other_names)
+                  ? currentComic.other_names.join(' | ')
+                  : currentComic?.other_names}
+              </p>
+              {/* <Genres genres={currentComic?.genres || []} /> */}
+              <Authors authors={currentComic?.authors || []} />
+              <Stats
+                total_views={currentComic?.total_views || '0'}
+                followers={currentComic?.followers || '0'}
+              />
+              {currentComic?.description && (
+                <div className="mt-2">
+                  <p className="line-clamp-3">{currentComic?.description.replace(/NetTruyen/g, 'NextComics')}</p>
+                </div>
+              )}
+              <div className="flex flex-col sm:flex-row items-center gap-3 mt-5 font-bold">
+                <Button className="uppercase font-semibold">
+                  <Icon
+                    name="radix/history"
+                    className="text-lg mr-2"
+                  />
+                  Chi tiết
+                </Button>
               </div>
-            )}
-            <div className="flex flex-col sm:flex-row items-center gap-3 mt-5 font-bold">
-              <Button className="uppercase font-semibold">
-                <Icon
-                  name="radix/history"
-                  className="text-lg mr-2"
-                />
-                Chi tiết
-              </Button>
             </div>
-          </div>
-          <div>
+          ) : (
+            <div></div>
+          )}
+
+          <div className="md:pr-16">
             <Carousel
               className="w-[250px]"
               setApi={setApi}
