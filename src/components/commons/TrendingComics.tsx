@@ -52,13 +52,13 @@ export default function TrendingComics() {
           )}
         >
           {currentComic ? (
-            <div className="sm:text-center">
-              <h4 className="text-3xl font-extrabold mt-5 sm:mt-0">{currentComic?.title}</h4>
-              <p className="mb-3 mt-1 text-sm font-semibold text-gray-400">
+            <div className="mx-auto">
+              <h4 className=" text-3xl sm:text-md font-extrabold mt-5 sm:mt-0">{currentComic?.title}</h4>
+              <span className="mb-3 mt-1 text-sm font-semibold text-gray-400">
                 {Array.isArray(currentComic?.other_names)
                   ? currentComic.other_names.join(' | ')
                   : currentComic?.other_names}
-              </p>
+              </span>
               {/* <Genres genres={currentComic?.genres || []} /> */}
               <Authors authors={currentComic?.authors || []} />
               <Stats
