@@ -10,6 +10,8 @@ import { IComic } from '~/types'
 
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
 
+import NewComics from './NewComics'
+
 export default async function Home() {
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -31,6 +33,7 @@ export default async function Home() {
     <HydrationBoundary state={dehydrate(queryClient)}>
       <main className="max-w-[72rem] mx-auto pt-5 pb-16 px-3">
         <TrendingComics />
+        <NewComics />
       </main>
     </HydrationBoundary>
   )
