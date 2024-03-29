@@ -1,13 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 
 import { useCallback } from 'react'
+import Authors from '~/components/commons/Authors'
+import Genres from '~/components/commons/Genres'
 import { Icon } from '~/components/commons/Icon'
+import Stats from '~/components/commons/Stats'
 import { Button } from '~/components/ui/button'
 import { IComic } from '~/types'
-
-import Authors from './Authors'
-import Genres from './Genres'
-import Stats from './Stats'
 
 const ComicInfo = ({ comic, readNow }: { comic: IComic; readNow: () => void }) => {
   const handleReadNow = useCallback(() => {}, [])

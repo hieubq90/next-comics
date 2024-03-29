@@ -5,11 +5,8 @@ import Link from 'next/link'
 import { useParams, usePathname } from 'next/navigation'
 import * as React from 'react'
 import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
+    NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList,
+    navigationMenuTriggerStyle
 } from '~/components/ui/navigation-menu'
 import { cn } from '~/lib/utils'
 
@@ -66,20 +63,6 @@ const Header: React.FC = () => {
                   </NavigationMenuItem>
                   <NavigationMenuItem>
                     <Link
-                      href="/genres"
-                      legacyBehavior
-                      passHref
-                    >
-                      <NavigationMenuLink
-                        className={navigationMenuTriggerStyle()}
-                        active={pathname === '/genres'}
-                      >
-                        Thể Loại
-                      </NavigationMenuLink>
-                    </Link>
-                  </NavigationMenuItem>
-                  <NavigationMenuItem>
-                    <Link
                       href="/new"
                       legacyBehavior
                       passHref
@@ -89,6 +72,20 @@ const Header: React.FC = () => {
                         active={pathname === '/new'}
                       >
                         Truyện Mới
+                      </NavigationMenuLink>
+                    </Link>
+                  </NavigationMenuItem>
+                  <NavigationMenuItem>
+                    <Link
+                      href="/genres"
+                      legacyBehavior
+                      passHref
+                    >
+                      <NavigationMenuLink
+                        className={navigationMenuTriggerStyle()}
+                        active={pathname === '/genres'}
+                      >
+                        Thể Loại
                       </NavigationMenuLink>
                     </Link>
                   </NavigationMenuItem>

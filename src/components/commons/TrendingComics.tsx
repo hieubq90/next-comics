@@ -5,12 +5,7 @@ import * as React from 'react'
 import { comicsClient } from '~/app/providers'
 import { Button } from '~/components/ui/button'
 import {
-  Carousel,
-  CarouselApi,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
+    Carousel, CarouselApi, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 } from '~/components/ui/carousel'
 import { cn } from '~/lib/utils'
 
@@ -21,6 +16,8 @@ import { Stats } from './Stats'
 import styles from './TrendingComics.module.scss'
 
 export default function TrendingComics() {
+  const router = useRouter()
+
   const trendingComics = comicsClient.comics.trending.useQuery(['trending'])
   const [api, setApi] = React.useState<CarouselApi>()
   const [current, setCurrent] = React.useState(0)
@@ -71,7 +68,10 @@ export default function TrendingComics() {
                 </div>
               )}
               <div className="flex flex-col sm:flex-row items-center gap-3 mt-5 font-bold">
-                <Button className="uppercase font-semibold">
+                <Button
+                  className="dark:text-white uppercase font-semibold"
+                  onClick={() => router.push(`/comic/${currentComic?.id}`)}
+                >
                   <Icon
                     name="radix/history"
                     className="text-lg mr-2"
@@ -106,8 +106,8 @@ export default function TrendingComics() {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="text-black hover:text-primary" />
-              <CarouselNext className="text-black hover:text-primary" />
+              <CarouselPrevious className="text-black dark:text-white hover:text-primary" />
+              <CarouselNext className="text-black dark:text-white hover:text-primary" />
             </Carousel>
           </div>
         </div>
