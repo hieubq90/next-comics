@@ -59,7 +59,7 @@ const comicContact = c.router({
   },
   trending: {
     method: 'GET',
-    path: '/trending-comics',
+    path: '/top',
     responses: {
       200: GetComicsResult,
     },
