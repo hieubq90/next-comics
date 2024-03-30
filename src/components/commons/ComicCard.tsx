@@ -48,7 +48,7 @@ const ComicCard = React.forwardRef<HTMLDivElement, ComicCardProps>((props, ref) 
   return (
     <div
       ref={ref}
-      className="overflow-hidden rounded-md duration-500 border-2 border-transparent md:hover:border-emerald-300 relative group md:group-hover:shadow-md cursor-pointer"
+      className="overflow-hidden rounded-md duration-500 border-2 border-transparent md:hover:border-primary relative group md:group-hover:shadow-md cursor-pointer"
       onClick={(e: React.MouseEvent<HTMLDivElement>) => handleClickCard(e, 'detail')}
     >
       <div className="relative">
@@ -73,8 +73,8 @@ const ComicCard = React.forwardRef<HTMLDivElement, ComicCardProps>((props, ref) 
         />
       </div>
       {detail ? (
-        <div className="absolute top-1/2 bottom-0 inset-x-0 flex flex-col justify-end px-2 sm:px-4 py-2 bg-gradient-to-b from-transparent to-black">
-          <h5 className="font-semibold leading-5 text-md text-white group-hover:text-emerald-400 text-shadow duration-200 line-clamp-2">
+        <div className="absolute bottom-0 inset-x-0 flex flex-col justify-end px-2 sm:px-4 py-2 bg-[#000000b3]">
+          <h5 className="uppercase font-semibold leading-5 text-md lg:text-sm text-white group-hover:text-primary text-shadow duration-200 line-clamp-1">
             <span className="no-underline">{title}</span>
           </h5>
           <hr className="mt-3 mb-0.5 border-gray-500" />
@@ -101,19 +101,15 @@ const ComicCard = React.forwardRef<HTMLDivElement, ComicCardProps>((props, ref) 
                 </p>
               </div>
             ) : (
-              <div className="hidden md:flex items-center gap-0.5 justify-center gap-x-2 gap-y-1 text-emerald-400 text-xs py-1 mt-0.5">
-                <span className="flex items-center gap-1 bg-white/25 px-1 rounded">
+              <div className="hidden md:flex items-center gap-0.5 justify-between gap-x-2 gap-y-1 text-white text-xs py-1 mt-0.5">
+                <span className="flex flex-1 items-center justify-center gap-1 bg-white/25 px-1 rounded">
                   <Icon name="radix/eye-open" />
                   {total_views}
                 </span>
-                <span className="flex items-center gap-1 bg-white/25 px-1 rounded">
+                <span className="flex flex-1 items-center justify-center gap-1 bg-white/25 px-1 rounded">
                   <Icon name="radix/heart" />
                   {followers}
                 </span>
-                {/* <span className="flex items-center gap-1 bg-white/25 px-1 rounded">
-                    <Icon name="radix/chat-bubble" />
-                    {total_comments}
-                  </span> */}
               </div>
             )}
           </div>

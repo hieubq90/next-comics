@@ -46,7 +46,7 @@ export default function ComicPagination({
       )}
       <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-1.5 md:gap-3 responsive-devices">
         {isLoading
-          ? Array.from(Array(20).keys()).map((e) => (
+          ? Array.from(Array(12).keys()).map((e) => (
               <div
                 key={e}
                 className="aspect-[2/3] rounded bg-gray-100 animation-pulse"
@@ -61,7 +61,7 @@ export default function ComicPagination({
             ))}
       </div>
       {totalPages > 1 && (
-        <Pagination className="my-2">
+        <Pagination className="my-4">
           <PaginationContent>
             <Button
               size="icon"
