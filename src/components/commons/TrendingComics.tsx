@@ -20,11 +20,11 @@ export default function TrendingComics() {
 
   const trendingComics = comicsClient.comics.trending.useQuery(['trending'])
   const [api, setApi] = React.useState<CarouselApi>()
-  const [current, setCurrent] = React.useState(0)
+  const [current, setCurrent] = React.useState(1)
 
   const currentComic = React.useMemo(() => {
     if (trendingComics.isLoading || !trendingComics.data?.body?.comics) return undefined
-    return trendingComics.data?.body?.comics[current]
+    return trendingComics.data?.body?.comics[current - 1]
   }, [current, trendingComics.data?.body?.comics, trendingComics.isLoading])
 
   React.useEffect(() => {
