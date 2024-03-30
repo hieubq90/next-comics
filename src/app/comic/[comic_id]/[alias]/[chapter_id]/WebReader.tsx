@@ -68,7 +68,7 @@ const WebReader = React.forwardRef<
       const chapterIdx = chapters.findIndex((c: any) => c.id === Number(chapterId))
       const nextChapterIdx = chapterIdx + (type === 'next' ? 1 : -1)
       setIsLoading(true)
-      router.push(`/comic/${comicId}/${chapters[nextChapterIdx].id}`)
+      router.push(`/comic/${comicId}/${chapters[nextChapterIdx].alias}/${chapters[nextChapterIdx].id}`)
     },
     [chapter.chapters, chapterId, comicId, router]
   )
@@ -155,7 +155,7 @@ const WebReader = React.forwardRef<
           <span>{chapter.chapter_name}</span>
         </div>
         {/* FOOTER */}
-        {/* <div
+        <div
           className={cn(
             'select-none absolute flex items-center flex-col-reverse justify-center gap-3 lg:flex-row lg:gap-8 py-2 bottom-0 inset-x-0 bg-[rgba(0,0,0,0.75)] text-gray-400 text-sm font-semibold duration-300',
             showToolbar ? 'translate-y-0 opacity-1' : 'translate-y-full opacity-0'
@@ -251,7 +251,7 @@ const WebReader = React.forwardRef<
               <Label htmlFor="reading-mode">Chế độ đọc sách</Label>
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
       {isLoading && <Loading />}
     </div>

@@ -22,7 +22,7 @@ const genreContact = c.router({
 const COMIC_STATUS_VALUES = ['Salmon', 'Tuna', 'Trout'] as const
 const ComicStatus = z.enum(COMIC_STATUS_VALUES)
 
-const TOP_COMMICS_VALUES = ['daily', 'weekly', 'monthly', 'chapter', 'follow', 'comment'] as const
+const TOP_COMMICS_VALUES = ['', 'daily', 'weekly', 'monthly', 'chapter', 'follow', 'comment'] as const
 const TopComicsType = z.enum(TOP_COMMICS_VALUES)
 
 const comicContact = c.router({
@@ -139,17 +139,17 @@ const comicContact = c.router({
     }),
     summary: 'get completed comics',
   },
-  topComicsAll: {
-    method: 'GET',
-    path: '/top',
-    responses: {
-      200: GetComicsResult,
-    },
-    query: z.object({
-      page: z.string().transform(Number).optional(),
-    }),
-    summary: 'get comics by genres',
-  },
+  // topComicsAll: {
+  //   method: 'GET',
+  //   path: '/top',
+  //   responses: {
+  //     200: GetComicsResult,
+  //   },
+  //   query: z.object({
+  //     page: z.string().transform(Number).optional(),
+  //   }),
+  //   summary: 'get comics by genres',
+  // },
   topComics: {
     method: 'GET',
     path: '/top/:top_type',
