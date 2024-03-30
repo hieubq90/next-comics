@@ -8,12 +8,12 @@ import Loading from '~/components/layout/Loading'
 import BookReader from './BookReader'
 import WebReader from './WebReader'
 
-export default function Chapter({ comicId, chapterId }: { comicId: string; chapterId: string }) {
+export default function Chapter({ comicId, alias, chapterId }: { comicId: string; alias: string; chapterId: string }) {
   const bookReader = useRef(null)
   const [readingMode, setReadingMode] = useState<'web' | 'book'>('web')
 
-  const chapterDetail = comicsClient.comics.read.useQuery(['detail', comicId, chapterId], {
-    params: { comic_id: comicId, chapter_id: chapterId },
+  const chapterDetail = comicsClient.comics.read.useQuery(['detail', comicId, alias, chapterId], {
+    params: { comic_id: comicId, alias, chapter_id: chapterId },
   })
 
   const { isLoading, isError, error, data } = chapterDetail

@@ -188,9 +188,10 @@ const comicContact = c.router({
   },
   read: {
     method: 'GET',
-    path: '/comics/:comic_id/chapters/:chapter_id',
+    path: '/comics/:comic_id/chapters/:alias/:chapter_id',
     pathParams: z.object({
       comic_id: z.string(),
+      alias: z.string(),
       chapter_id: z.string(),
     }),
     responses: {
