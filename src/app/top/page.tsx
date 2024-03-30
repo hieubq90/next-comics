@@ -3,9 +3,9 @@ import { comicsClient } from '~/lib/ts-rest'
 
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
 
-import NewComics from './NewComics'
+import TopComics from './[top_type]/TopComics'
 
-export default async function NewComicsPage() {
+export default async function AllTopComicsPage({ params }: { params: { type: string } }) {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -18,14 +18,20 @@ export default async function NewComicsPage() {
   })
 
   await queryClient.prefetchQuery({
-    queryKey: ['new', '1'],
-    queryFn: async () => await comicsClient.comics.newComics({ query: { page: '1' } }),
+    queryKey: ['top', 'all', '1'],
+    queryFn: async () =>
+      await comicsClient.comics.topComics({
+        params: {
+          top_type: '',
+        },
+        query: { page: '1' },
+      }),
   })
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <main className="max-w-[72rem] mx-auto pt-5 pb-8 px-3">
-        <NewComics />
+        <TopComics type="all" />
       </main>
     </HydrationBoundary>
   )

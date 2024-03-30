@@ -3,9 +3,13 @@ import { comicsClient } from '~/lib/ts-rest'
 
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
 
-import NewComics from './NewComics'
+import TopComics from './TopComics'
 
-export default async function NewComicsPage() {
+type TOP_TYPE = '' | 'daily' | 'weekly' | 'monthly' | 'chapter' | 'follow' | 'comment'
+
+export default async function AllTopComicsPage({ params }: { params: { top_type: string } }) {
+  const { top_type } = params
+
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -18,14 +22,20 @@ export default async function NewComicsPage() {
   })
 
   await queryClient.prefetchQuery({
-    queryKey: ['new', '1'],
-    queryFn: async () => await comicsClient.comics.newComics({ query: { page: '1' } }),
+    queryKey: ['top', top_type ? top_type : 'all', '1'],
+    queryFn: async () =>
+      await comicsClient.comics.topComics({
+        params: {
+          top_type: top_type === 'all' ? '' : (top_type as TOP_TYPE),
+        },
+        query: { page: '1' },
+      }),
   })
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <main className="max-w-[72rem] mx-auto pt-5 pb-8 px-3">
-        <NewComics />
+        <TopComics type={top_type as TOP_TYPE & 'all'} />
       </main>
     </HydrationBoundary>
   )
