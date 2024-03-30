@@ -9,8 +9,6 @@ import { Button } from '~/components/ui/button'
 import { IComic } from '~/types'
 
 const ComicInfo = ({ comic, readNow }: { comic: IComic; readNow: () => void }) => {
-  const handleReadNow = useCallback(() => {}, [])
-
   return (
     <>
       <div className="max-w-5xl mx-auto p-0 rounded-xl sm:grid sm:grid-cols-4 gap-6 md:p-4">
@@ -30,8 +28,8 @@ const ComicInfo = ({ comic, readNow }: { comic: IComic; readNow: () => void }) =
           <Genres genres={comic.genres} />
           <Authors authors={comic.authors} />
           <Stats
-            total_views={comic.total_views}
-            followers={comic.followers}
+            total_views={`${comic.total_views || '0'}`}
+            followers={`${comic.followers || '0'}`}
           />
           {comic.description && (
             <div className="mt-2">

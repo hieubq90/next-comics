@@ -23,8 +23,9 @@ export default function TrendingComics() {
   const [current, setCurrent] = React.useState(0)
 
   const currentComic = React.useMemo(() => {
-    return trendingComics.data?.body?.comics[current] || undefined
-  }, [current, trendingComics.data?.body.comics])
+    if (trendingComics.isLoading || !trendingComics.data?.body?.comics) return undefined
+    return trendingComics.data?.body?.comics[current]
+  }, [current, trendingComics.data?.body?.comics, trendingComics.isLoading])
 
   React.useEffect(() => {
     if (!api) {
@@ -41,7 +42,7 @@ export default function TrendingComics() {
   return (
     <>
       {trendingComics.isLoading && <div>LOADING</div>}
-      {!trendingComics.isLoading && !trendingComics.isError && trendingComics.data ? (
+      {!trendingComics.isLoading && !trendingComics.isError && trendingComics.data?.body.comics ? (
         <div
           className={cn(
             'w-full min-h-[400px] rounded-2xl p-4 md:pl-16 flex md:flex-row flex-col-reverse items-center justify-between text-white',

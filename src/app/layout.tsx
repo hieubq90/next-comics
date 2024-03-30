@@ -5,6 +5,7 @@ import { Suspense } from 'react'
 import { register } from 'swiper/element'
 // import { Toaster } from 'react-hot-toast'
 import { baloo2, quicksand } from '~/assets/fonts'
+import Footer from '~/components/layout/Footer'
 import Header from '~/components/layout/Header'
 import { Toaster } from '~/components/ui/sonner'
 
@@ -50,9 +51,10 @@ export default function RootLayout({
         </video> */}
         <Providers>
           <Header />
-          <div>
+          <div style={{ minHeight: 'calc(100vh - 204px)' }}>
             <Suspense>{children}</Suspense>
           </div>
+          <Footer />
           <Toaster />
         </Providers>
       </body>

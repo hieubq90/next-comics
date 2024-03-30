@@ -29,6 +29,7 @@ export const RecommendComic = z.object({
 export const Chapter = z.object({
   id: z.number(),
   name: z.string(),
+  alias: z.string(),
 })
 
 export const Comic = z.object({
