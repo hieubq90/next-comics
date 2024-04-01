@@ -204,7 +204,7 @@ const WebReader = React.forwardRef<
                           <Link
                             id={`chapter_${c.id}`}
                             key={`chapter_${c.id}`}
-                            href={`/comic/${comicId}/${c.id}`}
+                            href={`/comic/${comicId}/${c.alias}/${c.id}`}
                             className={cn(
                               'px-4 py-2 block max-w-78 truncate duration-100 hover:bg-zinc-950',
                               c.id === Number(chapterId) ? 'text-primary font-bold' : ''
