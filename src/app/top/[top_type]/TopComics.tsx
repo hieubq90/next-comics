@@ -5,8 +5,6 @@ import * as React from 'react'
 import { comicsClient } from '~/app/providers'
 import ComicPagination from '~/components/commons/ComicPagination'
 
-import TopNav from './TopNav'
-
 export default function TopComics({
   type = 'all',
 }: {
@@ -48,10 +46,6 @@ export default function TopComics({
 
   return (
     <div className="max-w-6xl mx-auto">
-      <TopNav
-        currentTab={type}
-        onChange={handleChangeTab}
-      />
       <ComicPagination
         isLoading={topComics.isLoading}
         comics={topComics.data?.body.comics || []}

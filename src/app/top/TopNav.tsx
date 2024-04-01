@@ -1,13 +1,32 @@
+'use client'
+
+import { useParams, useRouter } from 'next/navigation'
+import React from 'react'
 import { Tabs, TabsList, TabsTrigger } from '~/components/ui/tabs'
 import { cn } from '~/lib/utils'
 
-export default function TopNav({ currentTab, onChange }: { currentTab: string; onChange: (value: string) => void }) {
+export default function TopNav() {
+  const params = useParams<{ top_type: string }>()
+  const { top_type } = params
+  const router = useRouter()
+  const handleChangeTab = React.useCallback(
+    (tab: string) => {
+      router.push(`/top/${tab}`)
+    },
+    [router]
+  )
+
+  const currentTab = React.useMemo(() => {
+    if (!top_type) return 'all'
+    return top_type
+  }, [top_type])
+
   return (
     <Tabs
       className="my-2"
       defaultValue="all"
       value={currentTab}
-      onValueChange={onChange}
+      onValueChange={handleChangeTab}
     >
       <TabsList className="grid w-full grid-cols-4">
         <TabsTrigger

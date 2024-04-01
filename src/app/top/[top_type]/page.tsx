@@ -34,9 +34,9 @@ export default async function AllTopComicsPage({ params }: { params: { top_type:
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <main className="max-w-[72rem] mx-auto pt-5 pb-8 px-3">
+      <div className="w-full">
         <TopComics type={top_type as TOP_TYPE & 'all'} />
-      </main>
+      </div>
     </HydrationBoundary>
   )
 }
