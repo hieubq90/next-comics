@@ -19,7 +19,7 @@ export default async function NewComicsPage() {
 
   await queryClient.prefetchQuery({
     queryKey: ['new', '1'],
-    queryFn: async () => await comicsClient.comics.newComics({ query: { page: '1' } }),
+    queryFn: async () => await comicsClient.comics.new({ query: { page: '1' } }),
   })
 
   return (
