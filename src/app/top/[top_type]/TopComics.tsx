@@ -15,9 +15,9 @@ export default function TopComics({
   const searchParams = useSearchParams()
   const page = searchParams.get('page')
 
-  const topComics = comicsClient.comics.topComics.useQuery(['top', type, page ? page : '1'], {
+  const topComics = comicsClient.comics.top.useQuery(['top', type, page ? page : '1'], {
     params: {
-      top_type: type === 'all' ? '' : type,
+      top_type: type,
     },
     query: { page: page || '1' },
   })

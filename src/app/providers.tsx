@@ -4,7 +4,7 @@ import { AxiosError, isAxiosError, Method } from 'axios'
 import { AppProgressBar as ProgressBar } from 'next-nprogress-bar'
 import { useState } from 'react'
 import { httpClient } from '~/lib/axios'
-import { comicsApi } from '~/lib/ts-rest'
+import { contact } from '~/lib/ts-rest'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
@@ -13,8 +13,8 @@ import { initQueryClient } from '@ts-rest/react-query'
 
 import ThemeProvider from './theme-provider'
 
-export const comicsClient = initQueryClient(comicsApi, {
-  baseUrl: 'https://comics-api.hieubq.io.vn/v1',
+export const comicsClient = initQueryClient(contact, {
+  baseUrl: 'https://comics-api.hieubq.io.vn',
   baseHeaders: {},
   api: async ({ path, method, headers, body }) => {
     try {

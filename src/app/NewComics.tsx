@@ -11,7 +11,7 @@ export default function NewComics() {
   const searchParams = useSearchParams()
   const page = searchParams.get('page')
 
-  const newComics = comicsClient.comics.newComics.useQuery(['new', page ? page : '1'], {
+  const newComics = comicsClient.comics.new.useQuery(['new', page ? page : '1'], {
     query: { page: page || '1' },
   })
 

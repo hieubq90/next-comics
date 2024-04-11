@@ -5,7 +5,7 @@ import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query
 
 import TopComics from './TopComics'
 
-type TOP_TYPE = '' | 'daily' | 'weekly' | 'monthly' | 'chapter' | 'follow' | 'comment'
+type TOP_TYPE = 'all' | 'daily' | 'weekly' | 'monthly' | 'chapter' | 'follow' | 'comment'
 
 export default async function AllTopComicsPage({ params }: { params: { top_type: string } }) {
   const { top_type } = params
@@ -21,16 +21,16 @@ export default async function AllTopComicsPage({ params }: { params: { top_type:
     },
   })
 
-  await queryClient.prefetchQuery({
-    queryKey: ['top', top_type ? top_type : 'all', '1'],
-    queryFn: async () =>
-      await comicsClient.comics.topComics({
-        params: {
-          top_type: top_type === 'all' ? '' : (top_type as TOP_TYPE),
-        },
-        query: { page: '1' },
-      }),
-  })
+  // await queryClient.prefetchQuery({
+  //   queryKey: ['top', top_type ? top_type : 'all', '1'],
+  //   queryFn: async () =>
+  //     await comicsClient.comics.top({
+  //       params: {
+  //         top_type: top_type === 'all' ? '' : (top_type as TOP_TYPE),
+  //       },
+  //       query: { page: '1' },
+  //     }),
+  // })
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

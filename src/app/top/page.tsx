@@ -20,9 +20,9 @@ export default async function AllTopComicsPage({ params }: { params: { type: str
   await queryClient.prefetchQuery({
     queryKey: ['top', 'all', '1'],
     queryFn: async () =>
-      await comicsClient.comics.topComics({
+      await comicsClient.comics.top({
         params: {
-          top_type: '',
+          top_type: 'all',
         },
         query: { page: '1' },
       }),
