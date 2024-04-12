@@ -13,7 +13,8 @@ export default function Chapter({ comicId, alias, chapterId }: { comicId: string
   const [readingMode, setReadingMode] = useState<'web' | 'book'>('web')
 
   const chapterDetail = comicsClient.comics.read.useQuery(['detail', comicId, alias, chapterId], {
-    params: { comic_id: comicId, alias, chapter_id: chapterId },
+    params: { comic_id: comicId, chapter_id: chapterId },
+    query: { alias },
   })
 
   const { isLoading, isError, error, data } = chapterDetail
