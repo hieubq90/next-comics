@@ -6,10 +6,13 @@ import Chapter from './Chapter'
 
 export default async function ChapterPage({
   params,
+  searchParams,
 }: {
-  params: { comic_id: string; alias: string; chapter_id: string }
+  params: { comic_id: string; chapter_id: string }
+  searchParams: { [key: string]: string | undefined }
 }) {
-  const { comic_id, alias, chapter_id } = params
+  const { comic_id, chapter_id } = params
+  const { alias } = searchParams
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -23,14 +26,20 @@ export default async function ChapterPage({
 
   await queryClient.prefetchQuery({
     queryKey: ['detail', comic_id, alias, chapter_id],
-    queryFn: async (_params) => await comicsClient.comics.read({ params: { comic_id, alias, chapter_id } }),
+    queryFn: async (_params) =>
+      await comicsClient.comics.read({
+        params: { comic_id, chapter_id },
+        query: {
+          alias: alias || '',
+        },
+      }),
   })
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <Chapter
         comicId={comic_id}
-        alias={alias}
+        alias={alias || ''}
         chapterId={chapter_id}
       />
     </HydrationBoundary>

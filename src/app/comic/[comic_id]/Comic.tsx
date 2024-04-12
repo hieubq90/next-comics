@@ -29,8 +29,8 @@ export default function Comic({ comicId }: { comicId: string }) {
       comidDetail.data.body.chapters.length
     ) {
       router.push(
-        `/comic/${comidDetail.data.body.id}/${comidDetail.data.body.chapters.at(-1)?.alias}/${
-          comidDetail.data.body.chapters.at(-1)?.id
+        `/comic/${comidDetail.data.body.id}/${comidDetail.data.body.chapters.at(-1)?.id}?alias=${
+          comidDetail.data.body.chapters.at(-1)?.alias || ''
         }`
       )
     }
