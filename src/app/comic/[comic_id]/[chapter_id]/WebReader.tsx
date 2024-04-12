@@ -68,7 +68,7 @@ const WebReader = React.forwardRef<
       const chapterIdx = chapters.findIndex((c: any) => c.id === Number(chapterId))
       const nextChapterIdx = chapterIdx + (type === 'next' ? 1 : -1)
       setIsLoading(true)
-      router.push(`/comic/${comicId}/${chapters[nextChapterIdx].alias}/${chapters[nextChapterIdx].id}`)
+      router.push(`/comic/${comicId}/${chapters[nextChapterIdx].id}?alias=${chapters[nextChapterIdx].alias || ''}`)
     },
     [chapter.chapters, chapterId, comicId, router]
   )
@@ -106,7 +106,7 @@ const WebReader = React.forwardRef<
             <Image
               id={`${img.page}`}
               key={img.page}
-              src={`https://imgproxy.hieubq.io.vn/index.php${
+              src={`https://imgproxy.hieubq.io.vn/comics.php${
                 server === 0 ? img.src : server === 1 ? img.backup_url_1 : img.backup_url_2
               }`}
               alt={`page_${img.page}`}
@@ -204,7 +204,7 @@ const WebReader = React.forwardRef<
                           <Link
                             id={`chapter_${c.id}`}
                             key={`chapter_${c.id}`}
-                            href={`/comic/${comicId}/${c.alias}/${c.id}`}
+                            href={`/comic/${comicId}/${c.id}?alias=${c.alias || ''}`}
                             className={cn(
                               'px-4 py-2 block max-w-78 truncate duration-100 hover:bg-zinc-950',
                               c.id === Number(chapterId) ? 'text-primary font-bold' : ''

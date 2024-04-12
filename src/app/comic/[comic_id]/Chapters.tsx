@@ -80,7 +80,7 @@ const Chapters = ({ comic }: { comic: IComic }) => {
                   key={`chapter_${chapter.id}`}
                   className="uppercase dark:text-white"
                   variant="outline"
-                  onClick={() => router.push(`/comic/${comic.id}/${chapter.alias}/${chapter.id}`)}
+                  onClick={() => router.push(`/comic/${comic.id}/${chapter.id}?alias=${chapter.alias || ''}`)}
                 >
                   {chapter.name}
                 </Button>
