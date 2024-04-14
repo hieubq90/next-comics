@@ -3,13 +3,9 @@ import { comicsClient } from '~/lib/ts-rest'
 
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query'
 
-import TopComics from './TopComics'
+import ComicsByGenre from './[gid]/ComicByGenre'
 
-type TOP_TYPE = 'all' | 'daily' | 'weekly' | 'monthly' | 'chapter' | 'follow' | 'comment'
-
-export default async function TopComicsPage({ params }: { params: { top_type: string } }) {
-  const { top_type } = params
-
+export default async function AllGenresComicsPage({ params }: { params: { type: string } }) {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -22,11 +18,11 @@ export default async function TopComicsPage({ params }: { params: { top_type: st
   })
 
   await queryClient.prefetchQuery({
-    queryKey: ['top', top_type ? top_type : 'all', '1'],
+    queryKey: ['genres', 'all', '1'],
     queryFn: async () =>
-      await comicsClient.comics.top({
+      await comicsClient.genres.byId({
         params: {
-          top_type: top_type as TOP_TYPE,
+          gid: 'all',
         },
         query: { page: '1' },
       }),
@@ -35,7 +31,7 @@ export default async function TopComicsPage({ params }: { params: { top_type: st
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <div className="w-full">
-        <TopComics type={top_type as TOP_TYPE} />
+        <ComicsByGenre gid="all" />
       </div>
     </HydrationBoundary>
   )

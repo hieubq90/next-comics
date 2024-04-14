@@ -5,19 +5,17 @@ import * as React from 'react'
 import { comicsClient } from '~/app/providers'
 import ComicPagination from '~/components/commons/ComicPagination'
 
-export default function TopComics({
-  type = 'all',
-}: {
-  type: 'all' | 'daily' | 'weekly' | 'monthly' | 'chapter' | 'follow' | 'comment'
-}) {
+export default function ComicsByGenre({ gid = 'all' }: { gid: string }) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const page = searchParams.get('page')
 
-  const topComics = comicsClient.comics.top.useQuery(['top', type, page ? page : '1'], {
+  const genres = comicsClient.genres.get.useQuery(['genres-data'])
+
+  const comics = comicsClient.genres.byId.useQuery(['genres', gid, page ? page : '1'], {
     params: {
-      top_type: type,
+      gid,
     },
     query: { page: page || '1' },
   })
@@ -30,22 +28,21 @@ export default function TopComics({
   )
 
   const title = React.useMemo(() => {
-    if (type === 'all') return 'Top Truyện'
-    if (type === 'daily') return 'Top Truyện Trong Ngày'
-    if (type === 'weekly') return 'Top Truyện Trong Tuần'
-    if (type === 'monthly') return 'Top Truyện Trong Tháng'
-    return ''
-  }, [type])
+    if (!gid || !genres.data) return 'Tất cả thể loại'
+
+    const curentGenre = genres.data.body.find((item) => item.id === gid)
+    return curentGenre ? curentGenre.name : 'Tất cả thể loại'
+  }, [gid, genres.data])
 
   return (
     <div className="max-w-6xl mx-auto">
       <ComicPagination
-        isLoading={topComics.isLoading}
-        comics={topComics.data?.body.comics || []}
+        isLoading={comics.isLoading}
+        comics={comics.data?.body.comics || []}
         title={title}
         icon="radix/top"
-        page={topComics.data?.body.current_page || 1}
-        totalPages={topComics.data?.body.total_pages || 1}
+        page={comics.data?.body.current_page || 1}
+        totalPages={comics.data?.body.total_pages || 1}
         setPage={handlePaging}
       />
     </div>
